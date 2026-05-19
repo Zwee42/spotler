@@ -1,0 +1,14 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "http://localhost:8000/auth/callback")
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
+# Wordle game config
+WORD_LENGTH = 6  # Artist names, so 6 letters
+MAX_GUESSES = 6
