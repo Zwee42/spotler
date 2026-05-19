@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Keep the database persistent across container restarts
+      - spotler_db:/app/backend/data
+
+volumes:
+  spotler_db:

@@ -92,6 +92,7 @@
 
       const state = await getGameState(gameId)
       gameState = state
+      letterStatuses = computeLetterStatuses(gameState?.feedbacks)
       currentGuess = ''
     } catch (_err: unknown) {
       error = 'Failed to submit guess'
@@ -186,6 +187,7 @@
             on:keydown={handleKeydown}
             placeholder="Enter artist name..."
             disabled={loading}
+            maxlength={gameState.target_length}
             class="w-full px-4 py-3 pr-12 border-2 border-slate-300 rounded focus:outline-none focus:border-slate-900 disabled:bg-slate-100 uppercase"
           />
           <span class="absolute right-4 text-slate-400 text-sm font-medium pointer-events-none">

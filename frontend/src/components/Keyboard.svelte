@@ -3,13 +3,14 @@
   export let onKeyPress: (key: string) => void = () => {};
 
   const rows = [
+    ['1','2','3','4','5','6','7','8','9','0'],
     ['q','w','e','r','t','y','u','i','o','p'],
     ['a','s','d','f','g','h','j','k','l'],
     ['z','x','c','v','b','n','m']
   ];
 
-  function getKeyClass(key: string) {
-    const status = letterStatuses[key];
+  function getKeyClass(key: string, statuses: Record<string, 'correct' | 'present' | 'absent'>) {
+    const status = statuses[key];
     const baseClass = "h-10 sm:h-12 flex-1 flex mx-0.5 justify-center items-center uppercase font-bold rounded transition-colors text-sm sm:text-base cursor-pointer hover:bg-slate-300";
     
     if (status === 'correct') {
@@ -29,7 +30,7 @@
   {#each rows as row}
     <div class="flex w-full mb-1 sm:mb-2 justify-center">
       {#each row as key}
-        <div class={getKeyClass(key)} on:click={() => onKeyPress(key)} on:keydown={(e) => e.key === 'Enter' && onKeyPress(key)} role="button" tabindex="0">
+        <div class={getKeyClass(key, letterStatuses)} on:click={() => onKeyPress(key)} on:keydown={(e) => e.key === 'Enter' && onKeyPress(key)} role="button" tabindex="0">
           {key}
         </div>
       {/each}

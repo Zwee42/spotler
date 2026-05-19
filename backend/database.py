@@ -2,8 +2,10 @@ import os
 import sqlite3
 from pathlib import Path
 
-DATABASE_URL = "sqlite:///./spotler.db"
-DB_PATH = Path(__file__).parent / "spotler.db"
+DB_DIR = Path(__file__).parent / "data"
+DB_DIR.mkdir(parents=True, exist_ok=True)
+DB_PATH = DB_DIR / "spotler.db"
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 def get_db_connection():
     """Get a connection to the SQLite database"""

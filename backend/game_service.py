@@ -116,21 +116,26 @@ def get_guess_feedback(guess: str, target: str) -> list:
     Get feedback for each letter in the guess
     Returns list of dicts with letter and status (correct, present, absent)
     """
-    feedback = []
-    target_chars = list(target)
+    feedback = [{"letter": char, "status": "absent"} for char in guess]
     
-    for i, char in enumerate(guess):
-        if i < len(target_chars):
-            if char == target_chars[i]:
-                feedback.append({"letter": char, "status": "correct"})
-            elif char in target_chars:
-                feedback.append({"letter": char, "status": "present"})
-                target_chars.remove(char)
-            else:
-                feedback.append({"letter": char, "status": "absent"})
-        else:
-            feedback.append({"letter": char, "status": "absent"})
-    
+    target_counts = {}
+    for char in target:
+        target_counts[char] = target_counts.get(char, 0) + 1
+        
+    # First pass: find correct letters (green)
+    for i in range(min(len(guess), len(target))):
+        if guess[i] == target[i]:
+            feedback[i]["status"] = "correct"
+            target_counts[guess[i]] -= 1
+            
+    # Second pass: find present letters (yellow)
+    for i in range(len(guess)):
+        if feedback[i]["status"] != "correct":
+            char = guess[i]
+            if target_counts.get(char, 0) > 0:
+                feedback[i]["status"] = "present"
+                target_counts[char] -= 1
+                
     return feedback
 
 

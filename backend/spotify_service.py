@@ -148,13 +148,13 @@ def get_random_artist(user_id: str):
 
 
 def sanitize_name(name: str) -> str:
-    """Return a sanitized version of the artist name: lowercase letters and spaces only (a-z )."""
+    """Return a sanitized version of the artist name: lowercase letters, numbers and spaces only."""
     import re
     if not name:
         return ""
-    # Keep only a-z letters and spaces
+    # Keep only a-z letters, 0-9 numbers and spaces
     s = name.lower()
-    s = re.sub(r"[^a-z ]", "", s)
+    s = re.sub(r"[^a-z0-9 ]", "", s)
     return s
 
 
