@@ -6,4 +6,4 @@ uvicorn main:app --host 0.0.0.0 --port 8000 &
 
 # Start the Vite frontend preview server
 cd /app/frontend
-npm run preview -- --host 0.0.0.0 --port 5173
+npm run start

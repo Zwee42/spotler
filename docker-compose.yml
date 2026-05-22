@@ -3,7 +3,7 @@ services:
     build: .
     ports:
       - "8000:8000"
-      - "5173:5173"
+      - "4173:4173"
     env_file:
       - ./backend/.env
     volumes:
