@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import spotipy.cache_handler
 from config import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI, FRONTEND_URL
 from database import get_db_connection
 import uuid
@@ -18,7 +19,8 @@ def get_spotify_oauth():
         client_id=SPOTIFY_CLIENT_ID,
         client_secret=SPOTIFY_CLIENT_SECRET,
         redirect_uri=SPOTIFY_REDIRECT_URI,
-        scope="user-top-read user-read-private user-read-email"
+        scope="user-top-read user-read-private user-read-email",
+        cache_handler=spotipy.cache_handler.MemoryCacheHandler()
     )
 
 def get_auth_url(state: str):
@@ -104,7 +106,7 @@ def save_artists_to_db(user_id: str, artists: list):
             INSERT OR REPLACE INTO artists (id, user_id, spotify_id, name, popularity, image_url)
             VALUES (?, ?, ?, ?, ?, ?)
             """, (
-                artist_id,
+                f"{user_id}_{artist_id}",
                 user_id,
                 artist['id'],
                 artist['name'],
